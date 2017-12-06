@@ -23,6 +23,7 @@
 file_to_disk1 = 'data/g1disk2.vdi'
 file_to_disk2 = 'data/g2disk2.vdi'
 file_to_disk0 = 'data/g0disk2.vdi'
+size_disk = 7 * 1024
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
   config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -34,7 +35,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "glus1"
       unless File.exist?(file_to_disk1)
-        vb.customize ['createhd', '--filename', file_to_disk1, '--size', 5 * 1024]
+        vb.customize ['createhd', '--filename', file_to_disk1, '--size', size_disk]
       end
       vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 1, '--type', 'hdd', '--medium', file_to_disk1]
     end
@@ -44,7 +45,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "glus2"
       unless File.exist?(file_to_disk2)
-        vb.customize ['createhd', '--filename', file_to_disk2, '--size', 5 * 1024]
+        vb.customize ['createhd', '--filename', file_to_disk2, '--size', size_disk]
       end
       vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 1, '--type', 'hdd', '--medium', file_to_disk2]
     end
@@ -54,7 +55,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "glus0"
       unless File.exist?(file_to_disk0)
-        vb.customize ['createhd', '--filename', file_to_disk0, '--size', 5 * 1024]
+        vb.customize ['createhd', '--filename', file_to_disk0, '--size', size_disk]
       end
       vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 1, '--type', 'hdd', '--medium', file_to_disk0]
     end
