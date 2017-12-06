@@ -48,3 +48,42 @@
         state: enabled
         immediate: true
         permanent: true
+    - name: Creating Logical Volume Structure
+      lvg:
+        vg: vg_gluster
+        pvs: /dev/sdb
+    - name: Creating Logical Volume Brick
+      lvol:
+        vg: vg_gluster
+        lv: "{{ item }}"
+        size: 3g
+      with_items:
+        - brick1
+        - brick2
+    - name: Creating Filesystem
+      filesystem:
+        fstype: xfs
+        dev: /dev/vg_gluster/{{ item }}
+      with_items:
+        - brick1
+        - brick2
+    - name: Creating Bricks Folder Points
+      file:
+        path: "/bricks/"
+        state: directory
+    - name: Creating Mount Poins
+      file:
+        path: /bricks/{{ item }}
+        state: directory
+      with_items:
+        - brick1
+        - brick2
+    - name: Mounting Logical Volumes
+      mount:
+        path: /bricks/{{ item }}
+        src: /dev/vg_gluster/{{ item }}
+        fstype: xfs
+        state: mounted
+      with_items:
+        - brick1
+        - brick2
