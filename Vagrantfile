@@ -12,6 +12,9 @@ file_to_disk0 = 'data/g0disk2.vdi'
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
   config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provisioning/playbook.yml"
+  end
   config.vm.define "glus1" do |g1|
     g1.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"

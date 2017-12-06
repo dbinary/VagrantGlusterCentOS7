@@ -13,15 +13,20 @@
       with_items:
         - deltarpm
         - tmux
-        - centos-release-gluster37
+        - firewalld
+        - centos-release-gluster38
     - name: Installing Gluster packages
       yum:
         name: "{{ item }}"
       with_items:
         - glusterfs
-        - gluster-cli
+        - glusterfs-cli
         - glusterfs-libs
         - glusterfs-server
+    - name: Start and Enable FirewallD
+      service:
+        name: firewalld
+        state: started
     - name: Create FirewallD Rules
       firewalld:
         zone: public
