@@ -1,0 +1,31 @@
+---
+- hosts: all
+  become: true
+  user: root
+  tasks:
+    - name: Verify SELinux
+      selinux:
+        policy: targeted
+        state: enforcing
+    - name: Installing packages
+      yum:
+        name: "{{ item }}"
+      with_items:
+        - deltarpm
+        - tmux
+        - centos-release-gluster37
+    - name: Installing Gluster packages
+      yum:
+        name: "{{ item }}"
+      with_items:
+        - glusterfs
+        - gluster-cli
+        - glusterfs-libs
+        - glusterfs-server
+    - name: Create FirewallD Rules
+      firewalld:
+        zone: public
+        port: 24007-24008/tcp
+        state: enabled
+        immediate: true
+        permanent: true
