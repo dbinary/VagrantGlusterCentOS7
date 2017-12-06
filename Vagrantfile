@@ -67,4 +67,9 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+  config.vm.define "glus1" do |g1|
+    g1.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+    end
+  end
 end
