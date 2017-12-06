@@ -67,17 +67,6 @@
       with_items:
         - brick1
         - brick2
-    - name: Creating Bricks Folder Points
-      file:
-        path: "/bricks/"
-        state: directory
-    - name: Creating Mount Poins
-      file:
-        path: /bricks/{{ item }}
-        state: directory
-      with_items:
-        - brick1
-        - brick2
     - name: Mounting Logical Volumes
       mount:
         path: /bricks/{{ item }}
