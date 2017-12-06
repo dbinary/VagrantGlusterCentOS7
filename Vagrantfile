@@ -70,6 +70,19 @@ Vagrant.configure("2") do |config|
   config.vm.define "glus1" do |g1|
     g1.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
+      vb.name = "glus1"
+    end
+  end
+  config.vm.define "glus2" do |g2|
+    g2.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "glus2"
+    end
+  end
+  config.vm.define "glus0" do |g0|
+    g0.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "glus0"
     end
   end
 end
