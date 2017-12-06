@@ -41,6 +41,7 @@
       service:
         name: firewalld
         state: started
+        enabled: yes
     - name: Create FirewallD Rules
       firewalld:
         zone: public
@@ -76,3 +77,8 @@
       with_items:
         - brick1
         - brick2
+    - name: Start and Enable glusterd
+      service:
+        name: glusterd
+        state: started
+        enabled: yes
