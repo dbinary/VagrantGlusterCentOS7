@@ -39,6 +39,7 @@ Vagrant.configure("2") do |config|
       end
       vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 1, '--type', 'hdd', '--medium', file_to_disk1]
     end
+    g1.vm.network "private_network", ip: "10.10.2.11"
   end
   config.vm.define "glus2" do |g2|
     g2.vm.provider "virtualbox" do |vb|
@@ -49,6 +50,7 @@ Vagrant.configure("2") do |config|
       end
       vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 1, '--type', 'hdd', '--medium', file_to_disk2]
     end
+    g2.vm.network "private_network", ip: "10.10.2.12"
   end
   config.vm.define "glus0" do |g0|
     g0.vm.provider "virtualbox" do |vb|
@@ -59,5 +61,6 @@ Vagrant.configure("2") do |config|
       end
       vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 1, '--type', 'hdd', '--medium', file_to_disk0]
     end
+    g0.vm.network "private_network", ip: "10.10.2.10"
   end
 end
