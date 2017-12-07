@@ -45,10 +45,14 @@
     - name: Create FirewallD Rules
       firewalld:
         zone: public
-        port: 24007-24008/tcp
+        port: "{{ item }}"
         state: enabled
         immediate: true
         permanent: true
+      with_items:
+       - 24007-24008/tcp
+       - 24009/tcp
+       - 24010/tcp
     - name: Creating Logical Volume Structure
       lvg:
         vg: vg_gluster
