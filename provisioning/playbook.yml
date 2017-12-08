@@ -86,3 +86,10 @@
         name: glusterd
         state: started
         enabled: yes
+    - name: Probe Gluster
+      serial: 1
+      shell: gluster peer probe {{ item }}
+      with_items:
+        - "{{ groups['all'] }}"
+      when:
+        - ansible_hostname == "glus0"
