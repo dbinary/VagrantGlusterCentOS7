@@ -86,8 +86,13 @@
         name: glusterd
         state: started
         enabled: yes
+    - name: Set /etc/hosts
+      lineinfile:
+        regexp: "^127.*glus[0-9]$"
+        path: /etc/hosts
+        line: "{{ ansible_all_ipv4_addresses[0] }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+        state: present
     - name: Probe Gluster
-      serial: 1
       shell: gluster peer probe {{ item }}
       with_items:
         - "{{ groups['all'] }}"
