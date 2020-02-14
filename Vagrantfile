@@ -24,11 +24,16 @@ file_to_disk1 = 'data/g1disk2.vdi'
 file_to_disk2 = 'data/g2disk2.vdi'
 file_to_disk0 = 'data/g0disk2.vdi'
 size_disk = 7 * 1024
+gluster_version = 40
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
   config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provisioning/playbook.yml"
+#    ansible.limit = "all"
+    ansible.extra_vars = {
+      gluster_version: gluster_version
+    }
   end
   config.vm.define "glus1" do |g1|
     g1.vm.provider "virtualbox" do |vb|
