@@ -16,6 +16,18 @@
 - hosts: all
   become: true
   user: root
+  vars:
+    gluster_version: 40
+    before_packages:
+        - deltarpm
+        - tmux
+        - firewalld
+        - centos-release-gluster{{ gluster_version }}
+    after_packages:
+        - glusterfs
+        - glusterfs-cli
+        - glusterfs-libs
+        - glusterfs-server
   tasks:
     - name: Verify SELinux
       selinux:
@@ -23,20 +35,10 @@
         state: enforcing
     - name: Installing packages
       yum:
-        name: "{{ item }}"
-      with_items:
-        - deltarpm
-        - tmux
-        - firewalld
-        - centos-release-gluster38
+        name: "{{ before_packages }}"
     - name: Installing Gluster packages
       yum:
-        name: "{{ item }}"
-      with_items:
-        - glusterfs
-        - glusterfs-cli
-        - glusterfs-libs
-        - glusterfs-server
+        name: "{{ after_packages }}"
     - name: Start and Enable FirewallD
       service:
         name: firewalld
